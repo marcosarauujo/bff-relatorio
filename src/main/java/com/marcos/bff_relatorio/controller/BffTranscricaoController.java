@@ -43,6 +43,25 @@ public class BffTranscricaoController {
                 .body(ms2Client.uploadAudio(audio, criancaId, terapeutaId, token));
     }
 
+    @PostMapping(value = "/upload-imagem", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(
+            summary = "Fazer upload de fotos do checklist/anamnese",
+            description = "Envia uma ou mais fotos. A IA extrairá os itens preenchidos e anotações."
+    )
+    @ApiResponse(responseCode = "201", description = "Imagens processadas e dados clínicos salvos com sucesso.")
+    @ApiResponse(responseCode = "401", description = "Token inválido ou ausente.")
+    @ApiResponse(responseCode = "500", description = "Erro ao processar as imagens na IA.")
+
+    public ResponseEntity<String> uploadImagens(
+            @RequestPart("imagens") List<MultipartFile> imagens,
+            @RequestParam("criancaId") Long criancaId,
+            @RequestParam("terapeutaId") Long terapeutaId,
+            @Parameter(hidden = true) @RequestHeader("Authorization") String token) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ms2Client.uploadImagens(imagens, criancaId, terapeutaId, token));
+    }
+
+
     @GetMapping("/crianca/{criancaId}")
     @Operation(
             summary = "Listar transcricoes de uma crianca",

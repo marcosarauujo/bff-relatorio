@@ -18,6 +18,12 @@ public interface Ms2Client {
                        @RequestParam("terapeutaId") Long terapeutaId,
                        @RequestHeader("Authorization") String token);
 
+    @PostMapping(value = "/transcricao/upload-imagem", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    String uploadImagens(@RequestPart("imagens") List<MultipartFile> imagens,
+                         @RequestParam("criancaId") Long criancaId,
+                         @RequestParam("terapeutaId") Long terapeutaId,
+                         @RequestHeader("Authorization") String token);
+
     @GetMapping("/transcricao/crianca/{criancaId}")
     List<TranscricaoResponseDTO> listarTranscricoesPorCrianca(@PathVariable("criancaId") Long criancaId,
                                                               @RequestHeader("Authorization") String token);
