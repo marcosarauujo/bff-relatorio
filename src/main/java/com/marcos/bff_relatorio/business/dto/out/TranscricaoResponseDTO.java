@@ -16,5 +16,6 @@ public class TranscricaoResponseDTO {
     private String id;
     private Long criancaId;
     private String textoBruto;
+    private String tipoOrigem; // AUDIO, IMAGEM
     private LocalDateTime dataCriacao;
 }
